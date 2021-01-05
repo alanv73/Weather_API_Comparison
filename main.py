@@ -135,27 +135,27 @@ def show_chart(parameter, data):
 
 
 def print_data(data):
+    field_data = [
+        {'name': 'temperature', 'parameter': 'temp'},
+        {'name': 'feels like', 'parameter': 'feelslike'},
+        {'name': 'pressure', 'parameter': 'pressure'},
+        {'name': 'dew point', 'parameter': 'dewpoint'},
+        {'name': 'humidity', 'parameter': 'humidity'},
+        {'name': 'clouds', 'parameter': 'clouds'},
+        {'name': 'visibility', 'parameter': 'visibility'},
+        {'name': 'wind speed', 'parameter': 'wind_speed'},
+        {'name': 'wind direction', 'parameter': 'wind_dir'},
+    ]
+
     print()
 
     for datum in data:
+
         print(datum.get('date', None))
-        print(f"\ttemp:\t{datum['owm'].temp}\t{datum['weatherstack'].temp}")
-        print(
-            f"\tfeels like:\t{datum['owm'].feelslike}\t{datum['weatherstack'].feelslike}")
-        print(
-            f"\tpressure:\t{datum['owm'].pressure}\t{datum['weatherstack'].pressure}")
-        print(
-            f"\tdewpoint:\t{datum['owm'].dewpoint}\t{datum['weatherstack'].dewpoint}")
-        print(
-            f"\thumidity:\t{datum['owm'].humidity}\t{datum['weatherstack'].humidity}")
-        print(
-            f"\tclouds:\t{datum['owm'].clouds}\t{datum['weatherstack'].clouds}")
-        print(
-            f"\tvisibility:\t{datum['owm'].visibility}\t{datum['weatherstack'].visibility}")
-        print(
-            f"\twind_speed:\t{datum['owm'].wind_speed}\t{datum['weatherstack'].wind_speed}")
-        print(
-            f"\twind_dir:\t{datum['owm'].wind_dir}\t{datum['weatherstack'].wind_dir}")
+
+        for fd in field_data:
+            print(
+                f"\t{fd['name']:14}:\t{datum['owm'].__getattribute__(fd['parameter'])}\t{datum['weatherstack'].__getattribute__(fd['parameter'])}")
 
 
 def save_data(data):
