@@ -105,14 +105,10 @@ def show_chart(parameter, data):
     ws_parameter = chart_data['ws-parameter']
     owm_parameter = chart_data['owm-parameter']
 
-    # print(x_axis)
-    # print(ws_parameter)
-    # print(owm_parameter)
-
     fig, ax = plt.subplots()
-    # ax1, ax2 = [ax, ax.twinx()]
     fig.canvas.set_window_title(f"{parameter.title()}")
     fig.autofmt_xdate()
+
     ax.plot(
         x_axis,
         ws_parameter,
@@ -120,6 +116,7 @@ def show_chart(parameter, data):
         color='Blue',
         linewidth=3.0
     )
+
     ax.plot(
         x_axis,
         owm_parameter,
