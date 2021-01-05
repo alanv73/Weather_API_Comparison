@@ -1,6 +1,7 @@
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime, timedelta
 from weatherstack import WeatherStack
+from numbar import printNumBar
 from owm import OWM_OneCall
 from dateutil import rrule
 import random
@@ -27,22 +28,38 @@ data = []
 wswx = WeatherStack(WEATHERSTACK_API_KEY)
 owmwx = OWM_OneCall(OWM_API_KEY)
 
+date_count = 0
+total_dates = 0
 
 for day in days:
 
     hours = [hour for hour in range(24)]
+    total_dates = len(days) * len(hours)
 
     for hr in hours:
 
         top_hour = datetime(day.year, day.month, day.day, hr)
+        print(
+            printNumBar(
+                date_count,
+                total_dates,
+                decimals=0,
+                length=60,
+                bar_label=f"{int(round((date_count/total_dates) * 100))}%",
+                print_output=False
+            ),
+            end='\r'
+        )
+        date_count += 1
 
         if (top_hour >= five_days_ago) and ((top_hour + timedelta(hours=1)) < datetime.now()):
             while True:
                 next_datetime = datetime(
                     day.year, day.month, day.day, hr, random.randint(0, 59))
                 if next_datetime >= five_days_ago:
-                    print(next_datetime.strftime(
-                        '%m/%d/%y %I:%M %p'), end='\r')
+
+                    # print(next_datetime.strftime(
+                    #     '%m/%d/%y %I:%M %p'), end='\r')
                     next_element = {}
                     next_element['date'] = next_datetime
 
